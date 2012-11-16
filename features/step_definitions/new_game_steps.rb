@@ -1,10 +1,13 @@
 # encoding: UTF-8
 
 Quando /^inicio o jogo$/ do
-  game = Game.new
-  game.start
+  steps %{
+    When I run `forca` interactively
+  }
 end
 
-Então /^vejo na tela:$/ do |string|
-  pending
+Então /^vejo na tela:$/ do |text|
+  steps %{
+    Then the stdout should contain "#{text}"
+  }
 end
