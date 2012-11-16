@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-Quando /^inicio o jogo$/ do
+Quando /^começo um novo jogo$/ do
   steps %{
     When I run `forca` interactively
   }

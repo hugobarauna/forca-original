@@ -8,7 +8,7 @@ Funcionalidade: Começar jogo
   Cenário: Começo de novo jogo com sucesso
     Ao começar o jogo, é mostrada a mensagem inicial para o jogador.
 
-    Quando inicio o jogo
+    Quando começo um novo jogo
     Então vejo na tela:
       """
       Você quer advinhar uma palavra com quantas letras?
