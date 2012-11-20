@@ -11,5 +11,5 @@ Funcionalidade: Começar jogo
     Quando começo um novo jogo
     Então vejo na tela:
       """
-      Você quer advinhar uma palavra com quantas letras?
+      Bem vindo ao jogo da forca!
       """

@@ -6,8 +6,7 @@ class Game
   end
   
   def start
-    initial_message = "Você quer advinhar uma palavra " <<
-                      "com quantas letras?"
+    initial_message = "Bem vindo ao jogo da forca!"
     @output.puts initial_message
   end
 end

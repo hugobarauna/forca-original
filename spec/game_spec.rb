@@ -9,8 +9,7 @@ describe Game do
       output = double("output")
       game = Game.new(output)
 
-      initial_message = "Você quer advinhar uma palavra " << 
-                        "com quantas letras?"
+      initial_message = "Bem vindo ao jogo da forca!"
       output.should_receive(:puts).with(initial_message)
 
       game.start
