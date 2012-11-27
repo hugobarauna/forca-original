@@ -1,13 +1,28 @@
 # encoding: UTF-8
 
+Dado /^que comecei um jogo$/ do
+  start_new_game
+end
+
 Quando /^começo um novo jogo$/ do
+  start_new_game
+end
+
+Quando /^termino o jogo$/ do
   steps %{
-    When I run `forca` interactively
+    When I type "fim"
   }
 end
 
-Então /^vejo na tela:$/ do |text|
   steps %{
-    Then the stdout should contain "#{text}"
+  }
+end
+
+Então /^o jogo termina com a seguinte mensagem na tela:$/ do |text|
+  steps %{
+    Then it should pass with:
+      """
+      #{text}
+      """
   }
 end

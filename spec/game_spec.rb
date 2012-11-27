@@ -4,15 +4,44 @@ require 'spec_helper'
 require 'game'
 
 describe Game do
+  let(:ui) { double("ui").as_null_object }
+
+  subject(:game) { Game.new(ui) }
+
   describe "#start" do
     it "prints the initial message" do
-      output = double("output")
-      game = Game.new(output)
-
       initial_message = "Bem vindo ao jogo da forca!"
-      output.should_receive(:puts).with(initial_message)
+      ui.should_receive(:write).with(initial_message)
 
       game.start
+    end
+  end
+
+  describe "#ended?" do
+    it "returns false when the game just started" do
+      game.should_not be_ended
+    end
+  end
+
+  describe "#next step" do
+    context "when the game just started" do
+      it "asks the user for the length of the word to be raffled" do
+        question = "Qual o tamanho da palavra a ser sorteada?"
+        ui.should_receive(:write).with(question)
+
+        ui.should_receive(:read)
+
+        game.next_step
+      end
+    end
+
+    it "finishes the game when the user asks to" do
+      user_input = "fim"
+      ui.stub(read: user_input)
+
+      game.next_step
+
+      game.should be_ended
     end
   end
 end
