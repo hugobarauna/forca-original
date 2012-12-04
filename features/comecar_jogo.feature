@@ -28,3 +28,19 @@ Funcionalidade: Começar jogo
       """
       _ _ _ _
       """
+
+  @wip
+  Cenário: Sorteio da palavra sem sucesso
+    Se o jogador pedir pro jogo sortear uma palavra com um tamanho
+    que o jogo não tem disponível, o jogador deve ser avisado disso
+    e o jogo deve pedir pro usuário sortear outra palavra.
+
+    Dado que comecei um jogo
+    Quando escolho que a palavra a ser sorteada deverá ter "20" letras
+    E termino o jogo
+    Então o jogo termina com a seguinte mensagem na tela:
+      """
+      Não temos uma palavra com o tamanho desejado,
+      é necessário escolher outro tamanho.
+      Qual o tamanho da palavra a ser sorteada?
+      """
