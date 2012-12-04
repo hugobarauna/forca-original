@@ -14,7 +14,10 @@ Quando /^termino o jogo$/ do
   }
 end
 
+Quando /^escolho que a palavra a ser sorteada deverá ter "(.*?)" letras\
+$/ do |number_of_letters|
   steps %{
+    When I type "#{number_of_letters}"
   }
 end
 

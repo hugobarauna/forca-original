@@ -29,11 +29,33 @@ describe Game do
         question = "Qual o tamanho da palavra a ser sorteada?"
         ui.should_receive(:write).with(question)
 
-        ui.should_receive(:read)
+        word_length = "3"
+        ui.should_receive(:read).and_return(word_length)
 
         game.next_step
       end
     end
+
+    context "when the user asks to raffle a word" do
+      it "raffles a word with the given length" do
+        word_length = "3"
+        ui.stub(read: word_length)
+
+        game.next_step
+
+        game.raffled_word.should have(word_length).letters
+      end
+
+      it "prints a '_' for each letter in the raffled word" do
+        word_length = "3"
+        ui.stub(read: word_length)
+
+        ui.should_receive(:write).with("_ _ _")
+
+        game.next_step
+      end
+    end
+
 
     it "finishes the game when the user asks to" do
       user_input = "fim"
