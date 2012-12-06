@@ -4,19 +4,9 @@ require 'spec_helper'
 require 'game'
 
 describe Game do
-  let(:ui) { double("ui").as_null_object }
   let(:word_raffler) { double("raffler").as_null_object }
 
-  subject(:game) { Game.new(ui, word_raffler) }
-
-  describe "#start" do
-    it "prints the initial message" do
-      initial_message = "Bem vindo ao jogo da forca!"
-      ui.should_receive(:write).with(initial_message)
-
-      game.start
-    end
-  end
+  subject(:game) { Game.new(word_raffler) }
 
   describe "#ended?" do
     it "returns false when the game just started" do
@@ -24,62 +14,29 @@ describe Game do
     end
   end
 
-  describe "#next step" do
-    context "when the game just started" do
-      it "asks the user for the length of the word to be raffled" do
-        question = "Qual o tamanho da palavra a ser sorteada?"
-        ui.should_receive(:write).with(question)
+  describe "#raffle" do
+    it "raffles a word with the given length" do
+      word_raffler.should_receive(:raffle).with(3)
 
-        word_length = "3"
-        ui.should_receive(:read).and_return(word_length)
-
-        game.next_step
-      end
+      game.raffle(3)
     end
 
-    context "when the user asks to raffle a word" do
-      it "raffles a word with the given length" do
-        word_length = "3"
-        ui.stub(read: word_length)
+    it "saves the raffled word" do
+      raffled_word = "mom"
+      word_raffler.stub(raffle: raffled_word)
 
-        word_raffler.should_receive(:raffle).with(word_length.to_i)
+      game.raffle(3)
 
-        game.next_step
-      end
-
-      it "prints a '_' for each letter in the raffled word" do
-        word_length = "3"
-        ui.stub(read: word_length)
-        word_raffler.stub(raffle: "mom")
-
-        ui.should_receive(:write).with("_ _ _")
-
-        game.next_step
-      end
-
-      it "tells if it's not possible to raffle with the given length" do
-        word_length = "20"
-        ui.stub(read: word_length)
-        word_raffler.stub(raffle: nil)
-
-        error_message = "Não temos uma palavra com o tamanho " <<
-                       "desejado,\n" <<
-                       "é necessário escolher outro tamanho."
-
-        ui.should_receive(:write).with(error_message)
-
-        game.next_step
-      end
+      game.raffled_word.should == raffled_word
     end
+  end
 
-
-    it "finishes the game when the user asks to" do
-      user_input = "fim"
-      ui.stub(read: user_input)
-
-      game.next_step
+  describe "#finish" do
+    it "sets the game as ended" do
+      game.finish
 
       game.should be_ended
     end
   end
+
 end
