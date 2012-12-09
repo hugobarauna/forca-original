@@ -13,7 +13,7 @@ describe WordRaffler do
     raffler.raffle(4).should == "nice"
   end
 
-  it "returns nil if it doesn't have word with the given length" do
+  it "returns nil if it doesn't have a word with the given length" do
     words = %w(me you nice)
     raffler = WordRaffler.new(words)
 
