@@ -1,0 +1,33 @@
+# language: pt
+
+Funcionalidade: Adivinhar letra
+  Após a palavra do jogo ser sorteada, o jogador pode começar a tentar
+  adivinhar as letras da palavra.
+
+  Cada vez que ele acerta uma letra, o jogo mostra para ele em que posição
+  dentro da palavra está a letra que ele acertou.
+
+  Cada vez que o jogador erra uma letra, mais uma parte do boneco da forca
+  aparece na forca. O jogador pode errar no máximo seis vezes, que correspondem
+  às seis partes do boneco: cabeça, corpo, braço esquerdo, braço direito,
+  perna esquerda, perna direita.
+
+  Contexto:
+    * o jogo tem as possíveis palavra para sortear:
+      | número de letras | palavra sorteada |
+      | 3                | avo              |
+
+  @wip
+  Cenário: Sucesso ao adivinhar letra
+    Se o jogador adivinhar a letra com sucesso, o jogo mostra uma mensagem de
+    sucesso e mostra em que posição está a letra que o jogador adivinhou.
+
+    Dado que comecei um jogo
+    E que escolhi que a palavra a ser sorteada deverá ter "3" letras
+    Quando tento adivinhar que a palavra tem a letra "a"
+    E termino o jogo
+    Então o jogo mostra que eu adivinhei uma letra com sucesso
+    E o jogo termina com a seguinte mensagem na tela:
+      """
+      a _ _
+      """
