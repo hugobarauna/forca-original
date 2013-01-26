@@ -5,7 +5,9 @@ require 'game_flow'
 
 describe GameFlow do
   let(:ui) { double("ui").as_null_object }
-  let(:game) { double("game", state: :initial).as_null_object }
+  let(:game) { double("game",
+                      state: :initial,
+                      guessed_letters: []).as_null_object }
 
   subject(:game_flow) { GameFlow.new(game, ui) }
 
@@ -67,28 +69,45 @@ describe GameFlow do
     end
 
     context "when the game is in the 'word raffled' state" do
+      before { game.stub(state: :word_raffled) }
+
+      it "asks the user to guess a letter" do
+        question = "Qual letra você acha que a palavra tem?"
+        ui.should_receive(:write).with(question)
+
+        game_flow.next_step
+      end
+
       context "and the user guess a letter with success" do
+        before { game.stub(guess_letter: true) }
+
         it "prints a success message" do
-          game.stub(state: :word_raffled, guess_letter: true)
-
-          letter_guess = "f"
-          ui.stub(read: letter_guess)
-
           success_message = "Você adivinhou uma letra com sucesso."
           ui.should_receive(:write).with(success_message)
+
+          game_flow.next_step
+        end
+
+        it "prints the guessed letters" do
+          game.stub(raffled_word: "hey", guessed_letters: ["e"])
+
+          ui.should_receive(:write).with("_ e _")
 
           game_flow.next_step
         end
       end
     end
 
-
     it "finishes the game when the user asks to" do
       user_input = "fim"
       ui.stub(read: user_input)
 
+      game.stub(state: :initial)
       game.should_receive(:finish)
+      game_flow.next_step
 
+      game.stub(state: :word_raffled)
+      game.should_receive(:finish)
       game_flow.next_step
     end
   end

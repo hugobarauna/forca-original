@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 Dado /^o jogo tem as possíveis palavras para sortear:$/ do |words_table|
-  words = words_table.rows.map(&:last)
+  words = words_table.rows.map(&:last).join(" ")
   set_rafflable_words(words)
 end
 

@@ -51,6 +51,58 @@ describe Game do
     end
   end
 
+  describe "#guess_letter" do
+    it "returns true if the raffled word contains the given letter" do
+      game.raffled_word = "hey"
+
+      game.guess_letter("h").should be_true
+    end
+
+    it "saves the guessed letter when the guess is right" do
+      game.raffled_word = "hey"
+
+      game.guess_letter("h")
+
+      game.guessed_letters.should == ["h"]
+    end
+
+    it "does not save a guessed letter more than once" do
+      game.raffled_word = "hey"
+
+      game.guess_letter("h")
+      game.guess_letter("h")
+
+      game.guessed_letters.should == ["h"]
+    end
+
+    it "returns false if the raffled word doesn't contain the given" <<
+       " letter" do
+      game.raffled_word = "hey"
+
+      game.guess_letter("z").should be_false
+    end
+
+    it "returns false if the given letter is an blank string" do
+      game.raffled_word = "hey"
+
+      game.guess_letter("").should be_false
+      game.guess_letter("   ").should be_false
+    end
+  end
+
+  describe "#guessed_letters" do
+    it "returns the guessed letters" do
+      game.raffled_word = "hey"
+      game.guess_letter("e")
+
+      game.guessed_letters.should == ["e"]
+    end
+
+    it "returns an empty array when there's no guessed letters" do
+      game.guessed_letters.should == []
+    end
+  end
+
   describe "#finish" do
     it "sets the game as ended" do
       game.finish
