@@ -8,6 +8,10 @@ describe Game do
 
   subject(:game) { Game.new(word_raffler) }
 
+  context "when just created" do
+    its(:state) { should == :initial }
+  end
+
   describe "#ended?" do
     it "returns false when the game just started" do
       game.should_not be_ended
@@ -28,6 +32,98 @@ describe Game do
       game.raffle(3)
 
       game.raffled_word.should == raffled_word
+    end
+
+    it "makes a transition from :initial to :word_raffled on success" do
+      word_raffler.stub(raffle: "word")
+
+      expect do
+        game.raffle(3)
+      end.to change { game.state }.from(:initial).to(:word_raffled)
+    end
+
+    it "stays on the :initial state when a word can't be raffled" do
+      word_raffler.stub(raffle: nil)
+
+      game.raffle(3)
+
+      game.state.should == :initial
+    end
+  end
+
+  describe "#guess_letter" do
+    it "returns true if the raffled word contains the given letter" do
+      game.raffled_word = "hey"
+
+      game.guess_letter("h").should be_true
+    end
+
+    it "saves the guessed letter when the guess is right" do
+      game.raffled_word = "hey"
+
+      game.guess_letter("h")
+
+      game.guessed_letters.should == ["h"]
+    end
+
+    it "does not save a guessed letter more than once" do
+      game.raffled_word = "hey"
+
+      game.guess_letter("h")
+      game.guess_letter("h")
+
+      game.guessed_letters.should == ["h"]
+    end
+
+    it "returns false if the raffled word doesn't contain the given" <<
+       " letter" do
+      game.raffled_word = "hey"
+
+      game.guess_letter("z").should be_false
+    end
+
+    it "returns false if the given letter is an blank string" do
+      game.raffled_word = "hey"
+
+      game.guess_letter("").should be_false
+      game.guess_letter("   ").should be_false
+    end
+
+    it "updates the missed parts when the guess is wrong" do
+      game.raffled_word = "hey"
+
+      game.guess_letter("z")
+
+      game.missed_parts.should == ["cabeça"]
+    end
+  end
+
+  describe "#guessed_letters" do
+    it "returns the guessed letters" do
+      game.raffled_word = "hey"
+      game.guess_letter("e")
+
+      game.guessed_letters.should == ["e"]
+    end
+
+    it "returns an empty array when there's no guessed letters" do
+      game.guessed_letters.should == []
+    end
+  end
+
+  describe "#missed_parts" do
+    it "returns an empty array when there's no missed parts" do
+      game.missed_parts.should == []
+    end
+
+    it "returns the missed parts for each fail in guessing a letter" do
+      game.raffled_word = "hey"
+
+      game.guess_letter("z")
+      game.guess_letter("z")
+      game.guess_letter("z")
+
+      game.missed_parts.should == ["cabeça", "corpo", "braço esquerdo"]
     end
   end
 
