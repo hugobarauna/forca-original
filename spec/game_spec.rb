@@ -88,6 +88,14 @@ describe Game do
       game.guess_letter("").should be_false
       game.guess_letter("   ").should be_false
     end
+
+    it "updates the missed parts when the guess is wrong" do
+      game.raffled_word = "hey"
+
+      game.guess_letter("z")
+
+      game.missed_parts.should == ["cabeça"]
+    end
   end
 
   describe "#guessed_letters" do
@@ -100,6 +108,22 @@ describe Game do
 
     it "returns an empty array when there's no guessed letters" do
       game.guessed_letters.should == []
+    end
+  end
+
+  describe "#missed_parts" do
+    it "returns an empty array when there's no missed parts" do
+      game.missed_parts.should == []
+    end
+
+    it "returns the missed parts for each fail in guessing a letter" do
+      game.raffled_word = "hey"
+
+      game.guess_letter("z")
+      game.guess_letter("z")
+      game.guess_letter("z")
+
+      game.missed_parts.should == ["cabeça", "corpo", "braço esquerdo"]
     end
   end
 

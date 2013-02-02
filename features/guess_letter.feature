@@ -37,6 +37,16 @@ Funcionalidade: Adivinhar letra
     mensagem de erro e mostra quais as partes o boneco da forca já
     perdeu.
 
+    Dado que comecei um jogo
+    E que escolhi que a palavra a ser sorteada deverá ter "3" letras
+    Quando tento adivinhar que a palavra tem a letra "z"
+    E termino o jogo
+    Então o jogo mostra que eu errei a adivinhação da letra
+    E o jogo termina com a seguinte mensagem na tela:
+      """
+      O boneco da forca perdeu as seguintes partes do corpo: cabeça
+      """
+
   Cenário: Jogador advinha com sucesso duas vezes
     Quanto mais o jogador for acertando, mais o jogo vai mostrando pra
     ele as letras que ele adivinhou.

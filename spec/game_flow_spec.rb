@@ -96,6 +96,27 @@ describe GameFlow do
           game_flow.next_step
         end
       end
+
+      context "and the user fails to guess a letter" do
+        before { game.stub(guess_letter: false) }
+
+        it "prints a error message" do
+          error_message = "Você errou a letra."
+          ui.should_receive(:write).with(error_message)
+
+          game_flow.next_step
+        end
+
+        it "prints the list of the missed parts" do
+          game.stub(missed_parts: ["cabeça"])
+
+          missed_parts_message = "O boneco da forca perdeu as " <<
+                                 "seguintes partes do corpo: cabeça"
+          ui.should_receive(:write).with(missed_parts_message)
+
+          game_flow.next_step
+        end
+      end
     end
 
     it "finishes the game when the user asks to" do

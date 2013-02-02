@@ -57,3 +57,12 @@ Então /^o jogo mostra que eu adivinhei uma letra com sucesso$/ do
       """
   }
 end
+
+Então /^o jogo mostra que eu errei a adivinhação da letra$/ do
+  steps %{
+    Then the stdout should contain:
+      """
+      Você errou a letra.
+      """
+  }
+end
