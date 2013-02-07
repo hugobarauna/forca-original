@@ -70,7 +70,7 @@ Funcionalidade: Adivinhar letra
     Quando tento adivinhar que a palavra tem a letra "z"
     E tento adivinhar que a palavra tem a letra "y"
     E termino o jogo
-    E o jogo termina com a seguinte mensagem na tela:
+    Então o jogo termina com a seguinte mensagem na tela:
       """
       boneco da forca perdeu as seguintes partes do corpo: cabeça, corpo
       """

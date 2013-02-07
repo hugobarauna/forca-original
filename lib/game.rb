@@ -22,7 +22,6 @@ class Game
     @wrong_guesses = 0
   end
 
-
   def raffle(word_length)
     if @raffled_word = @word_raffler.raffle(word_length)
       @state = :word_raffled

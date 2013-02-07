@@ -61,18 +61,18 @@ describe Game do
     it "saves the guessed letter when the guess is right" do
       game.raffled_word = "hey"
 
-      game.guess_letter("h")
-
-      game.guessed_letters.should == ["h"]
+      expect do
+        game.guess_letter("h")
+      end.to change { game.guessed_letters }.from([]).to(["h"])
     end
 
     it "does not save a guessed letter more than once" do
       game.raffled_word = "hey"
-
-      game.guess_letter("h")
       game.guess_letter("h")
 
-      game.guessed_letters.should == ["h"]
+      expect do
+        game.guess_letter("h")
+      end.to_not change { game.guessed_letters }.from(["h"])
     end
 
     it "returns false if the raffled word doesn't contain the given" <<
@@ -119,9 +119,9 @@ describe Game do
     it "returns the missed parts for each fail in guessing a letter" do
       game.raffled_word = "hey"
 
-      game.guess_letter("z")
-      game.guess_letter("z")
-      game.guess_letter("z")
+      3.times do
+        game.guess_letter("z")
+      end
 
       game.missed_parts.should == ["cabeça", "corpo", "braço esquerdo"]
     end
