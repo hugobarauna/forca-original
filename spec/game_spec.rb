@@ -96,6 +96,17 @@ describe Game do
 
       game.missed_parts.should == ["cabeça"]
     end
+
+    it "makes a transition to the 'ended' state when all the letters " <<
+       "are guessed with success" do
+       game.state = :word_raffled
+       game.raffled_word = "hi"
+
+       game.guess_letter("h")
+       game.guess_letter("i")
+
+       game.state.should == :ended
+    end
   end
 
   describe "#guessed_letters" do
@@ -132,6 +143,35 @@ describe Game do
       game.finish
 
       game.should be_ended
+    end
+  end
+
+  describe "#user_won?" do
+    it "returns true when the user guessed all letters with success" do
+      game.state = :word_raffled
+      game.raffled_word = "hi"
+
+      game.guess_letter("h")
+      game.guess_letter("i")
+
+      game.user_won?.should be_true
+    end
+
+    it "returns false when the user didn't guessed all letters" do
+      game.state = :word_raffled
+      game.raffled_word = "hi"
+
+      6.times { game.guess_letter("z") }
+
+      game.user_won?.should be_false
+    end
+
+    it "returns false when the game is not in the 'ended' state" do
+      game.state = :initial
+      game.user_won?.should be_false
+
+      game.state = :word_raffled
+      game.user_won?.should be_false
     end
   end
 

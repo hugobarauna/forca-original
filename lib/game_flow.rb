@@ -28,21 +28,11 @@ class GameFlow
     when :word_raffled
       ask_to_guess_a_letter
     end
+
+    print_game_final_result if @game.ended?
   end
 
   private
-  def print_letters_feedback
-    letters_feedback = ""
-
-    @game.raffled_word.length.times do
-      letters_feedback << "_ "
-    end
-
-    letters_feedback.strip!
-
-    @ui.write(letters_feedback)
-  end
-
   def ask_to_raffle_a_word
     ask_the_user("Qual o tamanho da palavra a ser sorteada?") do |length|
       if @game.raffle(length.to_i)
@@ -95,6 +85,12 @@ class GameFlow
       @game.finish
     else
       yield user_input.strip
+    end
+  end
+
+  def print_game_final_result
+    if @game.user_won?
+      @ui.write("Você venceu! :)")
     end
   end
 end
