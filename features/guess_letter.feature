@@ -56,7 +56,7 @@ Funcionalidade: Adivinhar letra
     Quando tento adivinhar que a palavra tem a letra "a"
     E tento adivinhar que a palavra tem a letra "v"
     E termino o jogo
-    E o jogo termina com a seguinte mensagem na tela:
+    Então o jogo termina com a seguinte mensagem na tela:
       """
       a v _
       """
