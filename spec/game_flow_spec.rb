@@ -22,7 +22,7 @@ describe GameFlow do
 
   describe "#next_step" do
     context "when the game is in the 'initial' state" do
-      it "asks the user for the length of the word to be raffled" do
+      it "asks the player for the length of the word to be raffled" do
         question = "Qual o tamanho da palavra a ser sorteada?"
         ui.should_receive(:write).with(question)
 
@@ -32,7 +32,7 @@ describe GameFlow do
         game_flow.next_step
       end
 
-      context "and the user asks to raffle a word" do
+      context "and the player asks to raffle a word" do
         it "raffles a word with the given length" do
           word_length = "3"
           ui.stub(read: word_length)
@@ -71,14 +71,14 @@ describe GameFlow do
     context "when the game is in the 'word raffled' state" do
       before { game.stub(state: :word_raffled) }
 
-      it "asks the user to guess a letter" do
+      it "asks the player to guess a letter" do
         question = "Qual letra você acha que a palavra tem?"
         ui.should_receive(:write).with(question)
 
         game_flow.next_step
       end
 
-      context "and the user guess a letter with success" do
+      context "and the player guess a letter with success" do
         before { game.stub(guess_letter: true) }
 
         it "prints a success message" do
@@ -97,7 +97,7 @@ describe GameFlow do
         end
       end
 
-      context "and the user fails to guess a letter" do
+      context "and the player fails to guess a letter" do
         before { game.stub(guess_letter: false) }
 
         it "prints a error message" do
@@ -122,16 +122,16 @@ describe GameFlow do
     context "when the game is in the 'ended' state" do
       before { game.stub(state: :ended) }
 
-      it "prints a success message whe the user win" do
-        game.stub(user_won?: true)
+      it "prints a success message whe the player win" do
+        game.stub(player_won?: true)
 
         ui.should_receive(:write).with("Você venceu! :)")
 
         game_flow.next_step
       end
 
-      it "prints a defeat message when the user lose" do
-        game.stub(user_won?: false)
+      it "prints a defeat message when the player lose" do
+        game.stub(player_won?: false)
 
         ui.should_receive(:write).with("Você perdeu. :(")
 
@@ -139,9 +139,9 @@ describe GameFlow do
       end
     end
 
-    it "finishes the game when the user asks to" do
-      user_input = "fim"
-      ui.stub(read: user_input)
+    it "finishes the game when the player asks to" do
+      player_input = "fim"
+      ui.stub(read: player_input)
 
       game.stub(state: :initial)
       game.should_receive(:finish)

@@ -156,32 +156,32 @@ describe Game do
     end
   end
 
-  describe "#user_won?" do
-    it "returns true when the user guessed all letters with success" do
+  describe "#player_won?" do
+    it "returns true when the player guessed all letters with success" do
       game.state = :word_raffled
       game.raffled_word = "hi"
 
       game.guess_letter("h")
       game.guess_letter("i")
 
-      game.user_won?.should be_true
+      game.player_won?.should be_true
     end
 
-    it "returns false when the user didn't guessed all letters" do
+    it "returns false when the player didn't guessed all letters" do
       game.state = :word_raffled
       game.raffled_word = "hi"
 
       6.times { game.guess_letter("z") }
 
-      game.user_won?.should be_false
+      game.player_won?.should be_false
     end
 
     it "returns false when the game is not in the 'ended' state" do
       game.state = :initial
-      game.user_won?.should be_false
+      game.player_won?.should be_false
 
       game.state = :word_raffled
-      game.user_won?.should be_false
+      game.player_won?.should be_false
     end
   end
 end

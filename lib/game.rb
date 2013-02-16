@@ -56,7 +56,7 @@ class Game
     @state = :ended
   end
 
-  def user_won?
+  def player_won?
     return false if @state != :ended
 
     all_letters_were_guessed?

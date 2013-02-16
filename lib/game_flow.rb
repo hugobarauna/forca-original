@@ -34,7 +34,7 @@ class GameFlow
 
   private
   def ask_to_raffle_a_word
-    ask_the_user("Qual o tamanho da palavra a ser sorteada?") do |length|
+    ask_the_player("Qual o tamanho da palavra a ser sorteada?") do |length|
       if @game.raffle(length.to_i)
         @ui.write(guessed_letters)
       else
@@ -48,7 +48,7 @@ class GameFlow
   end
 
   def ask_to_guess_a_letter
-    ask_the_user("Qual letra você acha que a palavra tem?") do |letter|
+    ask_the_player("Qual letra você acha que a palavra tem?") do |letter|
       if @game.guess_letter(letter)
         @ui.write("Você adivinhou uma letra com sucesso.")
         @ui.write(guessed_letters)
@@ -77,19 +77,19 @@ class GameFlow
     letters.strip!
   end
 
-  def ask_the_user(question)
+  def ask_the_player(question)
     @ui.write(question)
-    user_input = @ui.read.strip
+    player_input = @ui.read.strip
 
-    if user_input == "fim"
+    if player_input == "fim"
       @game.finish
     else
-      yield user_input.strip
+      yield player_input.strip
     end
   end
 
   def print_game_final_result
-    if @game.user_won?
+    if @game.player_won?
       @ui.write("Você venceu! :)")
     else
       @ui.write("Você perdeu. :(")
