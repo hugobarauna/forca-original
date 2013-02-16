@@ -107,6 +107,16 @@ describe Game do
 
        game.state.should == :ended
     end
+
+    it "makes a transition to the 'ended' state when the player " <<
+       "miss 6 times trying to guess a letter " do
+       game.state = :word_raffled
+       game.raffled_word = "hi"
+
+       6.times { game.guess_letter("z")  }
+
+       game.state.should == :ended
+    end
   end
 
   describe "#guessed_letters" do
@@ -174,5 +184,4 @@ describe Game do
       game.user_won?.should be_false
     end
   end
-
 end

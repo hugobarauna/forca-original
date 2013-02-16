@@ -129,6 +129,14 @@ describe GameFlow do
 
         game_flow.next_step
       end
+
+      it "prints a defeat message when the user lose" do
+        game.stub(user_won?: false)
+
+        ui.should_receive(:write).with("Você perdeu. :(")
+
+        game_flow.next_step
+      end
     end
 
     it "finishes the game when the user asks to" do
