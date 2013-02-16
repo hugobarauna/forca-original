@@ -102,10 +102,10 @@ describe Game do
        game.state = :word_raffled
        game.raffled_word = "hi"
 
-       game.guess_letter("h")
-       game.guess_letter("i")
-
-       game.state.should == :ended
+       expect do
+         game.guess_letter("h")
+         game.guess_letter("i")
+       end.to change { game.state }.from(:word_raffled).to(:ended)
     end
 
     it "makes a transition to the 'ended' state when the player " <<
@@ -113,9 +113,9 @@ describe Game do
        game.state = :word_raffled
        game.raffled_word = "hi"
 
-       6.times { game.guess_letter("z")  }
-
-       game.state.should == :ended
+       expect do
+         6.times { game.guess_letter("z")  }
+       end.to change { game.state }.from(:word_raffled).to(:ended)
     end
   end
 
