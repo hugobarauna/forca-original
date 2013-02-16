@@ -40,6 +40,16 @@ Quando /^tento adivinhar que a palavra tem a letra "(.*?)"$/ do |letter|
   }
 end
 
+Quando /^tento adivinhar que a palavra tem a letra "(.*?)" \
+"(.*?)" vezes$/ do |letter, number_of_guesses|
+
+  number_of_guesses.to_i.times do
+    steps %{
+      * tento adivinhar que a palavra tem a letra "#{letter}"
+    }
+  end
+end
+
 Então /^o jogo termina com a seguinte mensagem na tela:$/ do |text|
   steps %{
     Then it should pass with:

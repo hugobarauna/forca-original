@@ -119,6 +119,26 @@ describe GameFlow do
       end
     end
 
+    context "when the game is in the 'ended' state" do
+      before { game.stub(state: :ended) }
+
+      it "prints a success message whe the user win" do
+        game.stub(user_won?: true)
+
+        ui.should_receive(:write).with("Você venceu! :)")
+
+        game_flow.next_step
+      end
+
+      it "prints a defeat message when the user lose" do
+        game.stub(user_won?: false)
+
+        ui.should_receive(:write).with("Você perdeu. :(")
+
+        game_flow.next_step
+      end
+    end
+
     it "finishes the game when the user asks to" do
       user_input = "fim"
       ui.stub(read: user_input)
