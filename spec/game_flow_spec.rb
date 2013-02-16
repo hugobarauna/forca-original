@@ -122,7 +122,7 @@ describe GameFlow do
     context "when the game is in the 'ended' state" do
       before { game.stub(state: :ended) }
 
-      it "prints a success message whe the user wins" do
+      it "prints a success message whe the user win" do
         game.stub(user_won?: true)
 
         ui.should_receive(:write).with("Você venceu! :)")
