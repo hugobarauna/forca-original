@@ -13,7 +13,7 @@ Dado /^que escolhi que a palavra a ser sorteada deverá ter "(.*?)"\
  letras\
 $/ do |number_of_letters|
   steps %{
-    When I type "#{number_of_letters}"
+    * I type "#{number_of_letters}"
   }
 end
 
@@ -23,20 +23,20 @@ end
 
 Quando /^termino o jogo$/ do
   steps %{
-    When I type "fim"
+    * I type "fim"
   }
 end
 
 Quando /^escolho que a palavra a ser sorteada deverá ter "(.*?)" letras\
 $/ do |number_of_letters|
   steps %{
-    When I type "#{number_of_letters}"
+    * I type "#{number_of_letters}"
   }
 end
 
 Quando /^tento adivinhar que a palavra tem a letra "(.*?)"$/ do |letter|
   steps %{
-    When I type "#{letter}"
+    * I type "#{letter}"
   }
 end
 
@@ -52,7 +52,7 @@ end
 
 Então /^o jogo termina com a seguinte mensagem na tela:$/ do |text|
   steps %{
-    Then it should pass with:
+    * it should pass with:
       """
       #{text}
       """
@@ -61,7 +61,7 @@ end
 
 Então /^o jogo mostra que eu adivinhei uma letra com sucesso$/ do
   steps %{
-    Then the stdout should contain:
+    * the stdout should contain:
       """
       Você adivinhou uma letra com sucesso.
       """
@@ -70,7 +70,7 @@ end
 
 Então /^o jogo mostra que eu errei a adivinhação da letra$/ do
   steps %{
-    Then the stdout should contain:
+    * the stdout should contain:
       """
       Você errou a letra.
       """
