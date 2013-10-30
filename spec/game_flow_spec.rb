@@ -13,7 +13,7 @@ describe GameFlow do
 
   describe "#start" do
     it "prints the initial message" do
-      initial_message = "Bem vindo ao jogo da forca!"
+      initial_message = "Bem-vindo ao jogo da forca!"
       ui.should_receive(:write).with(initial_message)
 
       game_flow.start

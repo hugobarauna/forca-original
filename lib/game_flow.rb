@@ -17,7 +17,7 @@ class GameFlow
   end
 
   def start
-    initial_message = "Bem vindo ao jogo da forca!"
+    initial_message = "Bem-vindo ao jogo da forca!"
     @ui.write(initial_message)
   end
 

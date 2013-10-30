@@ -12,7 +12,7 @@ Funcionalidade: Começar jogo
     E termino o jogo
     Então o jogo termina com a seguinte mensagem na tela:
       """
-      Bem vindo ao jogo da forca!
+      Bem-vindo ao jogo da forca!
       """
 
   Cenário: Sorteio da palavra com sucesso
