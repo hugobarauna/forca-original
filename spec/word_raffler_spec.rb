@@ -8,15 +8,15 @@ describe WordRaffler do
     words = %w(me you nice)
     raffler = WordRaffler.new(words)
 
-    raffler.raffle(3).should == "you"
-    raffler.raffle(2).should == "me"
-    raffler.raffle(4).should == "nice"
+    expect(raffler.raffle(3)).to eq("you")
+    expect(raffler.raffle(2)).to eq("me")
+    expect(raffler.raffle(4)).to eq("nice")
   end
 
   it "returns nil if it doesn't have a word with the given length" do
     words = %w(me you nice)
     raffler = WordRaffler.new(words)
 
-    raffler.raffle(20).should be_nil
+    expect(raffler.raffle(20)).to be_nil
   end
 end
