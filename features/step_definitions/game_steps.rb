@@ -12,9 +12,7 @@ end
 Dado /^que escolhi que a palavra a ser sorteada deverá ter "(.*?)"\
  letras\
 $/ do |number_of_letters|
-  steps %{
-    * I type "#{number_of_letters}"
-  }
+  type(number_of_letters)
 end
 
 Quando /^começo um novo jogo$/ do
@@ -22,57 +20,36 @@ Quando /^começo um novo jogo$/ do
 end
 
 Quando /^termino o jogo$/ do
-  steps %{
-    * I type "fim"
-  }
+  type("fim")
 end
 
 Quando /^escolho que a palavra a ser sorteada deverá ter "(.*?)" letras\
 $/ do |number_of_letters|
-  steps %{
-    * I type "#{number_of_letters}"
-  }
+  type(number_of_letters)
 end
 
 Quando /^tento adivinhar que a palavra tem a letra "(.*?)"$/ do |letter|
-  steps %{
-    * I type "#{letter}"
-  }
+  type(letter)
 end
 
 Quando /^tento adivinhar que a palavra tem a letra "(.*?)" \
 "(.*?)" vezes$/ do |letter, number_of_guesses|
 
   number_of_guesses.to_i.times do
-    steps %{
-      * tento adivinhar que a palavra tem a letra "#{letter}"
-    }
+    type(letter)
   end
 end
 
 Então /^o jogo termina com a seguinte mensagem na tela:$/ do |text|
-  steps %{
-    * it should pass with:
-      """
-      #{text}
-      """
-  }
+  assert_passing_with(text)
 end
 
 Então /^o jogo mostra que eu adivinhei uma letra com sucesso$/ do
-  steps %{
-    * the stdout should contain:
-      """
-      Você adivinhou uma letra com sucesso.
-      """
-  }
+  assert_partial_output("Você adivinhou uma letra com sucesso.",
+                         all_stdout)
 end
 
 Então /^o jogo mostra que eu errei a adivinhação da letra$/ do
-  steps %{
-    * the stdout should contain:
-      """
-      Você errou a letra.
-      """
-  }
+  assert_partial_output("Você errou a letra.",
+                        all_stdout)
 end
